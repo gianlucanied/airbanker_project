@@ -5,7 +5,7 @@ export default {
 </script>
 
 <template>
-  <h1>Ciao sono il Footer</h1>
+  <h1>Sezione Footer</h1>
 </template>
 
 <style scoped></style>
