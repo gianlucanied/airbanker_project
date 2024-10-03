@@ -44,7 +44,7 @@ export default {
       <!-- Logo e link Home -->
       <a class="navbar-brand" href="#">
         <router-link :to="{ name: 'home' }">
-          <img src="/public/logo_2.png" alt="Logo" />
+          <img src="/public/logo_3.png" alt="Logo" />
         </router-link>
       </a>
 
@@ -67,7 +67,10 @@ export default {
         id="navbarNavDropdown"
       >
         <ul class="navbar-nav">
-          <li class="nav-item" :class="{ active: currentPage === 'home' }">
+          <li
+            class="nav-item fromCenter"
+            :class="{ active: currentPage === 'home' }"
+          >
             <router-link :to="{ name: 'home' }" class="nav-link">
               Home
             </router-link>
@@ -109,44 +112,55 @@ export default {
     rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
   padding: 1rem 0;
 }
-
 .container {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Per separare il logo e il pulsante */
+  justify-content: space-between;
 }
-
 img {
   width: 200px;
 }
-
 .navbar .navbar-nav .nav-item {
   margin: 0 1rem;
 }
-
 .nav-link {
   text-decoration: none;
   color: #101e39;
   font-size: 1.2rem;
-  border-bottom: 3px solid transparent;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 5px;
+  border-bottom: none;
+  transition: color 0.5s;
 }
-
+.nav-link::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 3px;
+  bottom: 0;
+  left: 0;
+  background-color: #5bb7b2;
+  transition: width 0.4s ease-in-out;
+}
 .nav-link:hover {
   color: #5bb7b2;
-  transition: 0.5s;
 }
-
+.nav-link:hover::after {
+  width: 100%;
+}
 .navbar .navbar-nav .nav-item.active .nav-link {
-  border-bottom-color: #5bb7b2 !important;
   color: black;
   box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
 }
-
+.navbar .navbar-nav .nav-item.active .nav-link::after {
+  width: 100%;
+  background-color: #5bb7b2;
+}
 .login-container {
   display: flex;
   align-items: center;
 }
-
 .button-33 {
   background-color: #5bb7b2;
   border-radius: 100px;
@@ -166,22 +180,18 @@ img {
   -webkit-user-select: none;
   touch-action: manipulation;
 }
-
 .button-33:hover {
   box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px,
     rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
   transform: scale(1.05) rotate(-1deg);
 }
-
 @media (max-width: 768px) {
   .container {
     justify-content: space-around;
   }
-
   .navbar-collapse {
     justify-content: center;
   }
-
   .button-33 {
     margin-top: 20px;
   }
