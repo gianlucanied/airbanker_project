@@ -2,7 +2,7 @@
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/pagination";
-import { Pagination } from "swiper/modules";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import axios from "axios";
 
 export default {
@@ -17,7 +17,7 @@ export default {
   },
   setup() {
     return {
-      modules: [Pagination],
+      modules: [Autoplay, Pagination, Navigation],
     };
   },
   mounted() {
@@ -50,21 +50,27 @@ export default {
   <div class="container-fluid">
     <div class="jumbotron">
       <swiper
-        :pagination="{
-          dynamicBullets: true,
+        :spaceBetween="30"
+        :centeredSlides="true"
+        :autoplay="{
+          delay: 2500,
+          disableOnInteraction: false,
         }"
+        :pagination="{
+          clickable: true,
+        }"
+        :navigation="true"
         :modules="modules"
         class="mySwiper"
       >
         <swiper-slide>Slide 1</swiper-slide>
-        <swiper-slide>Slide 2</swiper-slide>
-        <swiper-slide>Slide 3</swiper-slide>
-        <swiper-slide>Slide 4</swiper-slide>
-        <swiper-slide>Slide 5</swiper-slide>
-        <swiper-slide>Slide 6</swiper-slide>
-        <swiper-slide>Slide 7</swiper-slide>
-        <swiper-slide>Slide 8</swiper-slide>
-        <swiper-slide>Slide 9</swiper-slide>
+        <swiper-slide>Slide 2</swiper-slide
+        ><swiper-slide>Slide 3</swiper-slide>
+        <swiper-slide>Slide 4</swiper-slide
+        ><swiper-slide>Slide 5</swiper-slide>
+        <swiper-slide>Slide 6</swiper-slide
+        ><swiper-slide>Slide 7</swiper-slide>
+        <swiper-slide>Slide 8</swiper-slide><swiper-slide>Slide 9</swiper-slide>
       </swiper>
     </div>
 

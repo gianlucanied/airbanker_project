@@ -44,7 +44,7 @@ export default {
       <!-- Logo e link Home -->
       <a class="navbar-brand" href="#">
         <router-link :to="{ name: 'home' }">
-          <img src="/public/logo_3.png" alt="Logo" />
+          <img src="/public/logo_3-removebg.png" alt="Logo" />
         </router-link>
       </a>
 

@@ -7,6 +7,9 @@ export default {
 <template>
   <body>
     <footer class="footer">
+      <div class="logo">
+        <img src="/public/logo_3-removebg.png" alt="" />
+      </div>
       <div class="container">
         <div class="row">
           <div class="footer-col">
@@ -77,6 +80,20 @@ ul {
 .footer {
   background-color: #5bb7b2;
   padding: 70px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.logo {
+  margin-bottom: 40px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 15px;
+}
+.logo img {
+  background-color: white; /* Sfondo bianco per il logo */
+  padding: 10px; /* Aggiungi un po' di spazio intorno al logo */
+  border-radius: 15px; /* Optional: aggiunge un effetto di arrotondamento agli angoli */
+  max-width: 250px; /* Imposta una larghezza massima per mantenere il logo proporzionato */
 }
 .footer-col {
   width: 25%;
