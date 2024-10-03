@@ -162,28 +162,35 @@ img {
   align-items: center;
 }
 .button-33 {
-  background-color: #5bb7b2;
-  border-radius: 100px;
+  background: linear-gradient(135deg, #5bb7b2 0%, #5bb7b2 50%, #36d1dc 100%);
+  border-radius: 50px;
   box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px,
     rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
   color: white;
   cursor: pointer;
   display: inline-block;
   font-family: CerebriSans-Regular, -apple-system, system-ui, Roboto, sans-serif;
-  padding: 7px 20px;
+  padding: 10px 30px; /* Più padding per rendere il bottone più prominente */
   text-align: center;
   text-decoration: none;
-  transition: all 250ms;
-  border: 0;
+  transition: all 0.3s ease;
   font-size: 16px;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
 }
+
 .button-33:hover {
-  box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px,
-    rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
-  transform: scale(1.05) rotate(-1deg);
+  background: linear-gradient(135deg, #36d1dc 0%, #5bb7b2 100%);
+  transform: scale(1.08); /* Leggero ingrandimento */
+  box-shadow: rgba(17, 17, 26, 0.2) 0px 8px 24px,
+    rgba(17, 17, 26, 0.2) 0px 16px 56px, rgba(17, 17, 26, 0.2) 0px 24px 80px;
+  border: none;
+}
+
+.button-33:active {
+  transform: scale(1.02); /* Piccola riduzione quando cliccato */
+  box-shadow: none; /* Rimuove l'ombra al click per un effetto "premuto" */
 }
 @media (max-width: 768px) {
   .container {
