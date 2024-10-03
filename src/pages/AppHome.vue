@@ -63,14 +63,13 @@ export default {
         :modules="modules"
         class="mySwiper"
       >
-        <swiper-slide>Slide 1</swiper-slide>
-        <swiper-slide>Slide 2</swiper-slide
-        ><swiper-slide>Slide 3</swiper-slide>
-        <swiper-slide>Slide 4</swiper-slide
-        ><swiper-slide>Slide 5</swiper-slide>
-        <swiper-slide>Slide 6</swiper-slide
-        ><swiper-slide>Slide 7</swiper-slide>
-        <swiper-slide>Slide 8</swiper-slide><swiper-slide>Slide 9</swiper-slide>
+        <swiper-slide><img src="/public/IMG_6827.jpg" alt="" /></swiper-slide>
+        <swiper-slide><img src="/public/IMG_6642.jpg" alt="" /></swiper-slide
+        ><swiper-slide><img src="/public/IMG_6715.jpg" alt="" /></swiper-slide>
+        <swiper-slide><img src="/public/IMG_6098.jpg" alt="" /></swiper-slide
+        ><swiper-slide><img src="/public/IMG_6214.jpg" alt="" /></swiper-slide>
+        <swiper-slide><img src="/public/IMG_6289.jpg" alt="" /></swiper-slide
+        ><swiper-slide><img src="/public/IMG_6633.jpg" alt="" /></swiper-slide>
       </swiper>
     </div>
 
@@ -90,6 +89,13 @@ export default {
 <style scoped>
 .mySwiper {
   height: 80vh;
+}
+
+.mySwiper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Fa sì che l'immagine mantenga le proporzioni senza essere tagliata */
+  object-position: center; /* Centra l'immagine all'interno del contenitore */
 }
 
 .stock-banner {
