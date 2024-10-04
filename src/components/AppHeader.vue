@@ -75,9 +75,9 @@ export default {
               Home
             </router-link>
           </li>
-          <li class="nav-item" :class="{ active: currentPage === 'home' }">
-            <router-link :to="{ name: 'home' }" class="nav-link">
-              Research
+          <li class="nav-item" :class="{ active: currentPage === 'other' }">
+            <router-link :to="{ name: 'other' }" class="nav-link">
+              Other page
             </router-link>
           </li>
           <li class="nav-item" :class="{ active: currentPage === 'about' }">
@@ -86,11 +86,9 @@ export default {
             </router-link>
           </li>
 
-          <!-- Aggiungiamo il pulsante login qui -->
+          <!-- Bottone Login per mobile, che appare nell'hamburger -->
           <li class="nav-item d-lg-none">
-            <router-link class="nav-link button-33" role="button"
-              >Login</router-link
-            >
+            <router-link class="button-33" role="button">Login</router-link>
           </li>
         </ul>
       </div>
@@ -161,6 +159,7 @@ img {
   display: flex;
   align-items: center;
 }
+
 .button-33 {
   background: linear-gradient(135deg, #5bb7b2 0%, #5bb7b2 50%, #36d1dc 100%);
   border-radius: 50px;
@@ -169,8 +168,7 @@ img {
   color: white;
   cursor: pointer;
   display: inline-block;
-  font-family: CerebriSans-Regular, -apple-system, system-ui, Roboto, sans-serif;
-  padding: 10px 30px; /* Più padding per rendere il bottone più prominente */
+  padding: 10px 30px;
   text-align: center;
   text-decoration: none;
   transition: all 0.3s ease;
@@ -182,7 +180,7 @@ img {
 
 .button-33:hover {
   background: linear-gradient(135deg, #36d1dc 0%, #5bb7b2 100%);
-  transform: scale(1.08); /* Leggero ingrandimento */
+  transform: scale(1.08);
   box-shadow: rgba(17, 17, 26, 0.2) 0px 8px 24px,
     rgba(17, 17, 26, 0.2) 0px 16px 56px, rgba(17, 17, 26, 0.2) 0px 24px 80px;
   border: none;
@@ -192,6 +190,7 @@ img {
   transform: scale(1.02); /* Piccola riduzione quando cliccato */
   box-shadow: none; /* Rimuove l'ombra al click per un effetto "premuto" */
 }
+
 @media (max-width: 768px) {
   .container {
     justify-content: space-around;
