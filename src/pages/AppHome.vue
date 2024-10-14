@@ -61,7 +61,7 @@ export default {
     </div>
 
     <!-- Banner con dati della borsa -->
-    <div class="stock-banner" v-if="stockData">
+    <!-- <div class="stock-banner" v-if="stockData">
       <h3>Dati di Borsa per AAPL</h3>
       <ul>
         <li v-for="(value, key) in stockData" :key="key">
@@ -69,7 +69,8 @@ export default {
           {{ value["4. close"] }} (Chiusura)
         </li>
       </ul>
-    </div>
+    </div> -->
+    <div id="prova"></div>
 
     <!-- Icona fissa sul lato destro -->
     <div class="fixed-icon" @click="toggleModal">
@@ -77,24 +78,30 @@ export default {
     </div>
 
     <!-- Modal -->
-    <div class="modal" v-if="modalVisible">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2>Notizie</h2>
-          <button @click="toggleModal" class="close-button">Chiudi</button>
-        </div>
-        <div class="modal-body">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odio
-          consectetur consequatur soluta sunt sequi rerum doloremque a laborum
-          et cum illo necessitatibus, nostrum omnis commodi. Commodi ut
-          temporibus quae animi.
+    <!-- Modal -->
+    <transition name="fade">
+      <div class="modal" v-if="modalVisible">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2>Notizie</h2>
+            <button @click="toggleModal" class="close-button">Chiudi</button>
+          </div>
+          <div class="modal-body">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odio
+            consectetur consequatur soluta sunt sequi rerum doloremque a laborum
+            et cum illo necessitatibus, nostrum omnis commodi. Commodi ut
+            temporibus quae animi.
+          </div>
         </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 
 <style scoped>
+#prova {
+  height: 1000px;
+}
 .jumbotron {
   margin-top: 100px;
   position: relative;
@@ -119,13 +126,13 @@ export default {
 .carousel-text {
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 30%;
   transform: translate(-50%, -50%);
   color: white;
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0.5);
+  text-align: left;
   padding: 20px;
   border-radius: 10px;
+  font-size: 50px;
 }
 
 .stock-banner {
@@ -157,6 +164,14 @@ export default {
 }
 
 /* Stile per il modal */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0;
+}
+
 .modal {
   position: fixed;
   top: 0;
@@ -172,10 +187,10 @@ export default {
 
 .modal-content {
   background: #fff;
-  border-radius: 8px;
-  padding: 20px;
-  width: 400px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 12px; /* Bordi più arrotondati */
+  padding: 30px; /* Aumentato padding per più spazio */
+  width: 450px; /* Larghezza leggermente aumentata */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Ombra più forte */
 }
 
 .modal-header {
@@ -189,8 +204,9 @@ export default {
   color: white;
   border: none;
   border-radius: 4px;
-  padding: 5px 10px;
+  padding: 8px 12px; /* Padding maggiore per il pulsante */
   cursor: pointer;
+  transition: background-color 0.3s; /* Transizione per il pulsante */
 }
 
 .close-button:hover {

@@ -6,6 +6,7 @@ export default {
       currentPage: "",
       isHeaderHidden: false,
       lastScrollPosition: 0, // Aggiunto per memorizzare la posizione di scroll
+      timeout: null, // Variabile per memorizzare il timeout
     };
   },
   watch: {
@@ -19,6 +20,7 @@ export default {
   },
   beforeDestroy() {
     window.removeEventListener("scroll", this.handleScroll);
+    clearTimeout(this.timeout); // Pulisce il timeout se il componente viene distrutto
   },
   methods: {
     handleScroll() {
@@ -31,6 +33,12 @@ export default {
         this.isHeaderHidden = false;
       }
       this.lastScrollPosition = currentScrollPosition; // Aggiorna l'ultima posizione
+
+      // Ripristina il timer quando si scrolla
+      clearTimeout(this.timeout); // Pulisce il timeout precedente
+      this.timeout = setTimeout(() => {
+        this.isHeaderHidden = false; // Ripristina l'header dopo un secondo di inattività
+      }, 1000); // 1000 ms = 1 secondo
     },
   },
 };
