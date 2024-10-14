@@ -5,7 +5,7 @@ export default {
     return {
       currentPage: "",
       isHeaderHidden: false,
-      timeout: null,
+      lastScrollPosition: 0, // Aggiunto per memorizzare la posizione di scroll
     };
   },
   watch: {
@@ -14,6 +14,7 @@ export default {
     },
   },
   mounted() {
+    this.currentPage = this.$route.name; // Imposta la pagina corrente al caricamento
     window.addEventListener("scroll", this.handleScroll);
   },
   beforeDestroy() {
@@ -21,18 +22,15 @@ export default {
   },
   methods: {
     handleScroll() {
-      if (this.timeout) clearTimeout(this.timeout);
-      const isAtTop =
-        window.scrollY === 0 || document.documentElement.scrollTop === 0;
-
-      if (isAtTop) {
-        this.isHeaderHidden = false;
-      } else {
+      const currentScrollPosition = window.scrollY;
+      if (currentScrollPosition > this.lastScrollPosition) {
+        // L'utente sta scrollando verso il basso
         this.isHeaderHidden = true;
-        this.timeout = setTimeout(() => {
-          this.isHeaderHidden = false;
-        }, 1000);
+      } else {
+        // L'utente sta scrollando verso l'alto
+        this.isHeaderHidden = false;
       }
+      this.lastScrollPosition = currentScrollPosition; // Aggiorna l'ultima posizione
     },
   },
 };
@@ -105,6 +103,7 @@ export default {
 </template>
 
 <style scoped>
+/* Regolazione dell'header fisso */
 .navbar-fixed {
   width: 100%;
   z-index: 1000;
@@ -119,8 +118,14 @@ export default {
   transition: transform 0.4s ease-in-out;
 }
 
+/* Aggiungi uno stato nascosto per l'header */
 .navbar-hidden {
   transform: translateY(-100%);
+}
+
+/* Assicurati che il contenuto inizi sotto l'header fisso */
+.container-fluid {
+  padding-top: 80px; /* Aggiungi un padding per evitare la sovrapposizione */
 }
 
 .container {

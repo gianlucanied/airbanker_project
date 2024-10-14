@@ -1,19 +1,19 @@
 <script>
-import { Swiper, SwiperSlide } from "swiper/vue";
-import "swiper/css";
-import "swiper/css/pagination";
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import axios from "axios";
 
 export default {
-  components: {
-    Swiper,
-    SwiperSlide,
-  },
   data() {
     return {
       stockData: null,
       modalVisible: false, // Stato per la visibilità del modal
+      activeSlide: 0, // Stato per il carosello
+      images: [
+        "/IMG_6098.jpg",
+        "/IMG_6289.jpg",
+        "/IMG_6715.jpg",
+        "/IMG_6827.jpg",
+        "/IMG_6872.jpg",
+      ], // Array delle immagini del carosello
     };
   },
   methods: {
@@ -35,38 +35,29 @@ export default {
     toggleModal() {
       this.modalVisible = !this.modalVisible; // Toggle della visibilità del modal
     },
+    nextSlide() {
+      this.activeSlide = (this.activeSlide + 1) % this.images.length; // Cambio automatico del carosello
+    },
   },
   mounted() {
     this.fetchStockData();
+    setInterval(this.nextSlide, 2000); // Cambia slide ogni 2 secondi
   },
 };
 </script>
 
 <template>
   <div class="container-fluid">
+    <!-- Jumbotron con carosello -->
     <div class="jumbotron">
-      <swiper
-        :spaceBetween="30"
-        :centeredSlides="true"
-        :autoplay="{
-          delay: 2500,
-          disableOnInteraction: false,
-        }"
-        :pagination="{
-          clickable: true,
-        }"
-        :navigation="true"
-        :modules="modules"
-        class="mySwiper"
-      >
-        <swiper-slide><img src="/public/IMG_6827.jpg" alt="" /></swiper-slide>
-        <swiper-slide><img src="/public/IMG_6642.jpg" alt="" /></swiper-slide>
-        <swiper-slide><img src="/public/IMG_6715.jpg" alt="" /></swiper-slide>
-        <swiper-slide><img src="/public/IMG_6098.jpg" alt="" /></swiper-slide>
-        <swiper-slide><img src="/public/IMG_6214.jpg" alt="" /></swiper-slide>
-        <swiper-slide><img src="/public/IMG_6289.jpg" alt="" /></swiper-slide>
-        <swiper-slide><img src="/public/IMG_6633.jpg" alt="" /></swiper-slide>
-      </swiper>
+      <div class="carousel">
+        <img :src="images[activeSlide]" alt="Slide" />
+        <!-- Testo fisso sopra il carosello -->
+        <div class="carousel-text">
+          <h1>Benvenuti nel nostro sito</h1>
+          <p>Esplora le nostre ultime novità</p>
+        </div>
+      </div>
     </div>
 
     <!-- Banner con dati della borsa -->
@@ -104,15 +95,37 @@ export default {
 </template>
 
 <style scoped>
-.mySwiper {
-  height: 80vh;
+.jumbotron {
+  margin-top: 100px;
+  position: relative;
+  height: 600px;
+  width: 100%;
+  background-color: #e9ecef;
+  overflow: hidden;
 }
 
-.mySwiper img {
+.carousel {
+  position: relative;
+  height: 100%;
+}
+
+.carousel img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  object-position: center;
+  object-fit: cover;
+  position: absolute;
+}
+
+.carousel-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 10px;
 }
 
 .stock-banner {
@@ -143,42 +156,6 @@ export default {
   transform: scale(1.1);
 }
 
-/* Popup con posizionamento corretto */
-.popup-window {
-  position: absolute;
-  right: 0; /* Posiziona il popup direttamente accanto all'icona */
-  bottom: 60px; /* Distanza dal fondo dell'icona, puoi regolare a tuo piacimento */
-  width: 300px;
-  height: 200px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
-.popup-content {
-  font-size: 1rem;
-  color: #333;
-  line-height: 1.5;
-  text-align: justify;
-}
-
-/* Condizione per la visualizzazione del popup */
-.fixed-icon:hover .popup-window {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-@media (max-width: 768px) {
-  .fixed-icon {
-    display: none; /* Nasconde l'icona per le news */
-  }
-}
-
 /* Stile per il modal */
 .modal {
   position: fixed;
@@ -197,7 +174,7 @@ export default {
   background: #fff;
   border-radius: 8px;
   padding: 20px;
-  width: 400px; /* Larghezza del modal */
+  width: 400px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -208,7 +185,7 @@ export default {
 }
 
 .close-button {
-  background-color: #ff0000; /* Rosso per il pulsante di chiusura */
+  background-color: #ff0000;
   color: white;
   border: none;
   border-radius: 4px;
@@ -217,8 +194,6 @@ export default {
 }
 
 .close-button:hover {
-  background-color: #cc0000; /* Colore più scuro al passaggio del mouse */
+  background-color: #cc0000;
 }
-
-/* Altri stili rimangono invariati... */
 </style>
