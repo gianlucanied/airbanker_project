@@ -116,13 +116,11 @@ export default {
   top: 0;
   left: 0;
   right: 0;
-  transition: transform 0.4s ease-in-out; /* Transizione verso l'alto */
+  transition: transform 0.4s ease-in-out;
 }
 
 .navbar-hidden {
-  transform: translateY(
-    -100%
-  ); /* Nasconde l'header quando viene aggiunta questa classe */
+  transform: translateY(-100%);
 }
 
 .container {
@@ -202,8 +200,8 @@ img {
 }
 
 .button-33:active {
-  transform: scale(1.02); /* Piccola riduzione quando cliccato */
-  box-shadow: none; /* Rimuove l'ombra al click per un effetto "premuto" */
+  transform: scale(1.02);
+  box-shadow: none;
 }
 
 @media (max-width: 768px) {
