@@ -31,7 +31,7 @@ export default {
         this.isHeaderHidden = true;
         this.timeout = setTimeout(() => {
           this.isHeaderHidden = false;
-        }, 2000);
+        }, 1000);
       }
     },
   },
@@ -39,7 +39,10 @@ export default {
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-lg navbar-fixed">
+  <nav
+    class="navbar navbar-expand-lg navbar-fixed"
+    :class="{ 'navbar-hidden': isHeaderHidden }"
+  >
     <div class="container">
       <!-- Logo e link Home -->
       <a class="navbar-brand" href="#">
@@ -109,7 +112,19 @@ export default {
   box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
     rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
   padding: 1rem 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  transition: transform 0.4s ease-in-out; /* Transizione verso l'alto */
 }
+
+.navbar-hidden {
+  transform: translateY(
+    -100%
+  ); /* Nasconde l'header quando viene aggiunta questa classe */
+}
+
 .container {
   display: flex;
   align-items: center;
