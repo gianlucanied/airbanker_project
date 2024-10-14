@@ -12,49 +12,32 @@ export default {
   },
   data() {
     return {
-      stockData: null, // Variabile per salvare i dati dell'API
-      popupVisible: false, // Stato per la visibilità del popup
-      popupHovered: false, // Stato per mantenere il popup aperto quando il mouse è sul popup
+      stockData: null,
+      modalVisible: false, // Stato per la visibilità del modal
     };
   },
   methods: {
     async fetchStockData() {
       try {
-        const response = await axios.get(
-          "https://www.alphavantage.co/query", // Endpoint dell'API (Alpha Vantage è un esempio)
-          {
-            params: {
-              function: "TIME_SERIES_INTRADAY", // Specifica la funzione che desideri
-              symbol: "AAPL", // Scegli il simbolo dell'azienda (esempio: AAPL per Apple)
-              interval: "5min", // Intervallo di tempo
-              apikey: "MFJKRQ1VT2HLXOR0", // Chiave API (sostituisci con la tua chiave personale)
-            },
-          }
-        );
+        const response = await axios.get("https://www.alphavantage.co/query", {
+          params: {
+            function: "TIME_SERIES_INTRADAY",
+            symbol: "AAPL",
+            interval: "5min",
+            apikey: "MFJKRQ1VT2HLXOR0",
+          },
+        });
         this.stockData = response.data["Time Series (5min)"];
       } catch (error) {
         console.error("Errore nel recupero dei dati", error);
       }
     },
-    showPopup() {
-      this.popupVisible = true; // Mostra il popup
-    },
-    hidePopup() {
-      // Chiudi il popup solo se il mouse non è sopra il popup
-      if (!this.popupHovered) {
-        this.popupVisible = false;
-      }
-    },
-    enterPopup() {
-      this.popupHovered = true; // Mantiene il popup aperto
-    },
-    leavePopup() {
-      this.popupHovered = false; // Imposta lo stato per chiudere il popup
-      this.popupVisible = false; // Nasconde il popup
+    toggleModal() {
+      this.modalVisible = !this.modalVisible; // Toggle della visibilità del modal
     },
   },
   mounted() {
-    this.fetchStockData(); // Chiama la funzione per recuperare i dati all'avvio del componente
+    this.fetchStockData();
   },
 };
 </script>
@@ -97,17 +80,19 @@ export default {
       </ul>
     </div>
 
-    <!-- Icona fissa sul lato destro con il popup -->
-    <div class="fixed-icon" @mouseenter="showPopup" @mouseleave="hidePopup">
+    <!-- Icona fissa sul lato destro -->
+    <div class="fixed-icon" @click="toggleModal">
       <img src="/public/news-icon-2.png" alt="Fixed Icon" />
-      <!-- Finestra popup -->
-      <div
-        class="popup-window"
-        v-if="popupVisible"
-        @mouseenter="enterPopup"
-        @mouseleave="leavePopup"
-      >
-        <div class="popup-content">
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" v-if="modalVisible">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Notizie</h2>
+          <button @click="toggleModal" class="close-button">Chiudi</button>
+        </div>
+        <div class="modal-body">
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odio
           consectetur consequatur soluta sunt sequi rerum doloremque a laborum
           et cum illo necessitatibus, nostrum omnis commodi. Commodi ut
@@ -193,4 +178,47 @@ export default {
     display: none; /* Nasconde l'icona per le news */
   }
 }
+
+/* Stile per il modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(31, 32, 41, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  width: 400px; /* Larghezza del modal */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-button {
+  background-color: #ff0000; /* Rosso per il pulsante di chiusura */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.close-button:hover {
+  background-color: #cc0000; /* Colore più scuro al passaggio del mouse */
+}
+
+/* Altri stili rimangono invariati... */
 </style>
