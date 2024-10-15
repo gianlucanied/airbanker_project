@@ -14,6 +14,7 @@ export default {
         "/IMG_6827.jpg",
         "/IMG_6872.jpg",
       ], // Array delle immagini del carosello
+      confirmationMessage: "", // Messaggio di conferma
     };
   },
   methods: {
@@ -37,6 +38,21 @@ export default {
     },
     nextSlide() {
       this.activeSlide = (this.activeSlide + 1) % this.images.length; // Cambio automatico del carosello
+    },
+    async submitForm(event) {
+      event.preventDefault(); // Previene il comportamento predefinito del modulo
+
+      const formData = new FormData(event.target); // Raccoglie i dati del modulo
+
+      try {
+        await axios.post("https://formspree.io/f/manyybvw", formData); // Invia i dati a Formspree
+        this.confirmationMessage = "Messaggio inviato con successo!"; // Messaggio di conferma
+        event.target.reset(); // Resetta il modulo dopo l'invio
+      } catch (error) {
+        console.error("Errore durante l'invio del modulo", error);
+        this.confirmationMessage =
+          "Errore durante l'invio del messaggio, riprova.";
+      }
     },
   },
   mounted() {
@@ -78,7 +94,6 @@ export default {
     </div>
 
     <!-- Modal -->
-    <!-- Modal -->
     <transition name="fade">
       <div class="modal" v-if="modalVisible">
         <div class="modal-content">
@@ -97,12 +112,7 @@ export default {
     </transition>
 
     <!-- Modulo Contatto -->
-
-    <form
-      action="https://formspree.io/f/manyybvw"
-      method="POST"
-      class="contact-form"
-    >
+    <form @submit="submitForm" class="contact-form">
       <h1>Contattaci:</h1>
       <label for="name">Nome:</label>
       <input type="text" name="name" id="name" required class="form-input" />
@@ -132,6 +142,11 @@ export default {
 
       <button type="submit" class="form-button">Invia</button>
     </form>
+
+    <!-- Messaggio di conferma -->
+    <div v-if="confirmationMessage" class="confirmation-message">
+      {{ confirmationMessage }}
+    </div>
   </div>
 </template>
 
@@ -263,38 +278,34 @@ export default {
   display: block; /* Ogni etichetta su una nuova riga */
   margin-bottom: 8px; /* Spazio sotto le etichette */
   font-weight: bold; /* Grassetto per le etichette */
-  color: #333; /* Colore del testo delle etichette */
 }
 
 .form-input,
 .form-textarea {
-  width: 100%; /* Larghezza al 100% */
+  width: 100%; /* Larghezza completa */
   padding: 10px; /* Padding interno */
-  margin-bottom: 15px; /* Spazio sotto i campi */
-  border: 1px solid #ccc; /* Bordo grigio */
-  border-radius: 5px; /* Bordo arrotondato */
-  font-size: 16px; /* Dimensione del font */
-  transition: border-color 0.3s; /* Transizione per il colore del bordo */
-}
-
-.form-input:focus,
-.form-textarea:focus {
-  border-color: #007bff; /* Colore del bordo al focus */
-  outline: none; /* Rimuove il contorno predefinito */
+  margin-bottom: 20px; /* Spazio tra i campi */
+  border: 1px solid #ccc; /* Bordo grigio chiaro */
+  border-radius: 4px; /* Bordo arrotondato */
 }
 
 .form-button {
   background-color: #007bff; /* Colore di sfondo blu */
-  color: white; /* Colore del testo bianco */
-  padding: 10px 15px; /* Padding interno */
+  color: white; /* Colore del testo */
   border: none; /* Nessun bordo */
-  border-radius: 5px; /* Bordo arrotondato */
-  cursor: pointer; /* Cambia il cursore al passaggio del mouse */
-  font-size: 16px; /* Dimensione del font */
-  transition: background-color 0.3s; /* Transizione per il colore di sfondo */
+  border-radius: 4px; /* Bordo arrotondato */
+  padding: 10px 15px; /* Padding */
+  cursor: pointer; /* Punta del cursore */
+  transition: background-color 0.3s; /* Transizione per il pulsante */
 }
 
 .form-button:hover {
-  background-color: #0056b3; /* Colore di sfondo al passaggio del mouse */
+  background-color: #0056b3; /* Colore di sfondo più scuro al passaggio del mouse */
+}
+
+.confirmation-message {
+  margin-top: 20px; /* Spazio sopra il messaggio */
+  font-size: 1.2em; /* Dimensione del testo del messaggio */
+  color: green; /* Colore verde per il messaggio di conferma */
 }
 </style>
