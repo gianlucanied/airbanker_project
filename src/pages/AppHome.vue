@@ -95,6 +95,43 @@ export default {
         </div>
       </div>
     </transition>
+
+    <!-- Modulo Contatto -->
+
+    <form
+      action="https://formspree.io/f/manyybvw"
+      method="POST"
+      class="contact-form"
+    >
+      <h1>Contattaci:</h1>
+      <label for="name">Nome:</label>
+      <input type="text" name="name" id="name" required class="form-input" />
+
+      <label for="surname">Cognome:</label>
+      <input
+        type="text"
+        name="surname"
+        id="surname"
+        required
+        class="form-input"
+      />
+
+      <label for="phone">Numero di cellulare:</label>
+      <input type="tel" name="phone" id="phone" required class="form-input" />
+
+      <label for="email">La tua email:</label>
+      <input type="email" name="email" id="email" required class="form-input" />
+
+      <label for="message">Il tuo messaggio:</label>
+      <textarea
+        name="message"
+        id="message"
+        required
+        class="form-textarea"
+      ></textarea>
+
+      <button type="submit" class="form-button">Invia</button>
+    </form>
   </div>
 </template>
 
@@ -211,5 +248,53 @@ export default {
 
 .close-button:hover {
   background-color: #cc0000;
+}
+
+.contact-form {
+  background-color: #f8f9fa; /* Colore di sfondo chiaro */
+  padding: 20px; /* Padding interno */
+  border-radius: 10px; /* Bordo arrotondato */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombra leggera */
+  max-width: 500px; /* Larghezza massima del modulo */
+  margin: 20px auto; /* Margine automatico per centrare */
+}
+
+.contact-form label {
+  display: block; /* Ogni etichetta su una nuova riga */
+  margin-bottom: 8px; /* Spazio sotto le etichette */
+  font-weight: bold; /* Grassetto per le etichette */
+  color: #333; /* Colore del testo delle etichette */
+}
+
+.form-input,
+.form-textarea {
+  width: 100%; /* Larghezza al 100% */
+  padding: 10px; /* Padding interno */
+  margin-bottom: 15px; /* Spazio sotto i campi */
+  border: 1px solid #ccc; /* Bordo grigio */
+  border-radius: 5px; /* Bordo arrotondato */
+  font-size: 16px; /* Dimensione del font */
+  transition: border-color 0.3s; /* Transizione per il colore del bordo */
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  border-color: #007bff; /* Colore del bordo al focus */
+  outline: none; /* Rimuove il contorno predefinito */
+}
+
+.form-button {
+  background-color: #007bff; /* Colore di sfondo blu */
+  color: white; /* Colore del testo bianco */
+  padding: 10px 15px; /* Padding interno */
+  border: none; /* Nessun bordo */
+  border-radius: 5px; /* Bordo arrotondato */
+  cursor: pointer; /* Cambia il cursore al passaggio del mouse */
+  font-size: 16px; /* Dimensione del font */
+  transition: background-color 0.3s; /* Transizione per il colore di sfondo */
+}
+
+.form-button:hover {
+  background-color: #0056b3; /* Colore di sfondo al passaggio del mouse */
 }
 </style>
