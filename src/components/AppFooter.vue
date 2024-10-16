@@ -5,9 +5,7 @@ import "aos/dist/aos.css"; // Importa il CSS di AOS
 export default {
   name: "AppFooter",
   mounted() {
-    this.fetchStockData();
     AOS.init();
-    setInterval(this.nextSlide, 2000); // Cambia slide ogni 2 secondi
   },
 };
 </script>
