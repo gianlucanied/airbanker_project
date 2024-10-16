@@ -1,5 +1,7 @@
 <script>
 import axios from "axios";
+import AOS from "aos"; // Importa AOS
+import "aos/dist/aos.css"; // Importa il CSS di AOS
 
 export default {
   data() {
@@ -58,6 +60,7 @@ export default {
   },
   mounted() {
     this.fetchStockData();
+    AOS.init();
     setInterval(this.nextSlide, 2000); // Cambia slide ogni 2 secondi
   },
 };
@@ -77,18 +80,6 @@ export default {
       </div>
     </div>
 
-    <!-- Banner con dati della borsa -->
-    <!-- <div class="stock-banner" v-if="stockData">
-      <h3>Dati di Borsa per AAPL</h3>
-      <ul>
-        <li v-for="(value, key) in stockData" :key="key">
-          <strong>{{ key }}:</strong> {{ value["1. open"] }} (Apertura),
-          {{ value["4. close"] }} (Chiusura)
-        </li>
-      </ul>
-    </div> -->
-    <div id="prova"></div>
-
     <!-- Icona fissa sul lato destro -->
     <div class="fixed-icon" @click="toggleModal">
       <img src="/public/news-icon-2.png" alt="Fixed Icon" />
@@ -103,57 +94,31 @@ export default {
             <button @click="toggleModal" class="close-button">Chiudi</button>
           </div>
           <div class="modal-body">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odio
-            consectetur consequatur soluta sunt sequi rerum doloremque a laborum
-            et cum illo necessitatibus, nostrum omnis commodi. Commodi ut
-            temporibus quae animi.
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
           </div>
         </div>
       </div>
     </transition>
 
     <!-- Modulo Contatto -->
-    <!-- <form @submit="submitForm" class="contact-form">
-      <h1>Contattaci:</h1>
-      <label for="name">Nome:</label>
-      <input type="text" name="name" id="name" required class="form-input" />
-
-      <label for="surname">Cognome:</label>
-      <input
-        type="text"
-        name="surname"
-        id="surname"
-        required
-        class="form-input"
-      />
-
-      <label for="phone">Numero di cellulare:</label>
-      <input type="tel" name="phone" id="phone" required class="form-input" />
-
-      <label for="email">La tua email:</label>
-      <input type="email" name="email" id="email" required class="form-input" />
-
-      <label for="message">Il tuo messaggio:</label>
-      <textarea
-        name="message"
-        id="message"
-        required
-        class="form-textarea"
-      ></textarea>
-
-      <button type="submit" class="form-button">Invia</button>
-    </form> -->
-
     <div class="background">
-      <div class="container">
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
         <div class="screen">
           <div class="screen-header">
-            <div class="screen-header-left">
+            <div
+              class="screen-header-left"
+              data-aos="fade-left"
+              data-aos-delay="100"
+            >
               <div class="screen-header-button close"></div>
               <div class="screen-header-button maximize"></div>
               <div class="screen-header-button minimize"></div>
             </div>
-            <div class="screen-header-right">
+            <div
+              class="screen-header-right"
+              data-aos="fade-right"
+              data-aos-delay="100"
+            >
               <div class="screen-header-ellipsis"></div>
               <div class="screen-header-ellipsis"></div>
               <div class="screen-header-ellipsis"></div>
@@ -162,13 +127,18 @@ export default {
           <div class="screen-body">
             <div class="screen-body-item left">
               <div class="app-title">
-                <span>CONTACT</span>
-                <span>US</span>
+                <span data-aos="fade-right" data-aos-delay="100"
+                  >CONTACT US</span
+                >
               </div>
             </div>
             <div class="screen-body-item">
               <form @submit="submitForm" class="app-form">
-                <div class="app-form-group">
+                <div
+                  class="app-form-group"
+                  data-aos="fade-left"
+                  data-aos-delay="100"
+                >
                   <label for="name">Nome:</label>
                   <input
                     type="text"
@@ -178,7 +148,11 @@ export default {
                     required
                   />
                 </div>
-                <div class="app-form-group">
+                <div
+                  class="app-form-group"
+                  data-aos="fade-left"
+                  data-aos-delay="100"
+                >
                   <label for="surname">Cognome:</label>
                   <input
                     type="text"
@@ -189,7 +163,11 @@ export default {
                   />
                 </div>
 
-                <div class="app-form-group">
+                <div
+                  class="app-form-group"
+                  data-aos="fade-left"
+                  data-aos-delay="100"
+                >
                   <label for="email">La tua email:</label>
                   <input
                     type="email"
@@ -199,7 +177,11 @@ export default {
                     required
                   />
                 </div>
-                <div class="app-form-group message">
+                <div
+                  class="app-form-group message"
+                  data-aos="fade-left"
+                  data-aos-delay="100"
+                >
                   <label for="message">Il tuo messaggio:</label>
                   <textarea
                     class="app-form-control form-textarea"
@@ -208,7 +190,11 @@ export default {
                     required
                   ></textarea>
                 </div>
-                <div class="app-form-group buttons">
+                <div
+                  class="app-form-group buttons"
+                  data-aos="fade-left"
+                  data-aos-delay="100"
+                >
                   <button type="submit" class="app-form-button form-button">
                     Invia
                   </button>
@@ -219,8 +205,6 @@ export default {
         </div>
       </div>
     </div>
-
-    <AppContactsUs />
 
     <!-- Messaggio di conferma -->
     <div v-if="confirmationMessage" class="confirmation-message">

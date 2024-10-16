@@ -1,12 +1,20 @@
 <script>
+import AOS from "aos"; // Importa AOS
+import "aos/dist/aos.css"; // Importa il CSS di AOS
+
 export default {
   name: "AppFooter",
+  mounted() {
+    this.fetchStockData();
+    AOS.init();
+    setInterval(this.nextSlide, 2000); // Cambia slide ogni 2 secondi
+  },
 };
 </script>
 
 <template>
   <body>
-    <footer class="footer">
+    <footer class="footer" data-aos="flip-up" data-aos-duration="1000">
       <div class="logo">
         <img src="/public/logo_3-removebg.png" alt="" />
       </div>
