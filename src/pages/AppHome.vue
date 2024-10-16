@@ -132,13 +132,13 @@ export default {
                 >
               </div>
             </div>
-            <div class="screen-body-item">
+            <div
+              class="screen-body-item"
+              data-aos="fade-left"
+              data-aos-delay="100"
+            >
               <form @submit="submitForm" class="app-form">
-                <div
-                  class="app-form-group"
-                  data-aos="fade-left"
-                  data-aos-delay="100"
-                >
+                <div class="app-form-group">
                   <label for="name">Nome:</label>
                   <input
                     type="text"
@@ -148,11 +148,7 @@ export default {
                     required
                   />
                 </div>
-                <div
-                  class="app-form-group"
-                  data-aos="fade-left"
-                  data-aos-delay="100"
-                >
+                <div class="app-form-group">
                   <label for="surname">Cognome:</label>
                   <input
                     type="text"
@@ -163,11 +159,7 @@ export default {
                   />
                 </div>
 
-                <div
-                  class="app-form-group"
-                  data-aos="fade-left"
-                  data-aos-delay="100"
-                >
+                <div class="app-form-group">
                   <label for="email">La tua email:</label>
                   <input
                     type="email"
@@ -177,11 +169,7 @@ export default {
                     required
                   />
                 </div>
-                <div
-                  class="app-form-group message"
-                  data-aos="fade-left"
-                  data-aos-delay="100"
-                >
+                <div class="app-form-group message">
                   <label for="message">Il tuo messaggio:</label>
                   <textarea
                     class="app-form-control form-textarea"
@@ -190,11 +178,7 @@ export default {
                     required
                   ></textarea>
                 </div>
-                <div
-                  class="app-form-group buttons"
-                  data-aos="fade-left"
-                  data-aos-delay="100"
-                >
+                <div class="app-form-group buttons">
                   <button type="submit" class="app-form-button form-button">
                     Invia
                   </button>
