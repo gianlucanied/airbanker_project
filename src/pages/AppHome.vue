@@ -46,12 +46,13 @@ export default {
 
       try {
         await axios.post("https://formspree.io/f/manyybvw", formData); // Invia i dati a Formspree
-        this.confirmationMessage = "Messaggio inviato con successo!"; // Messaggio di conferma
+        this.confirmationMessage = alert("Messaggio inviato con successo!"); // Messaggio di conferma
         event.target.reset(); // Resetta il modulo dopo l'invio
       } catch (error) {
         console.error("Errore durante l'invio del modulo", error);
-        this.confirmationMessage =
-          "Errore durante l'invio del messaggio, riprova.";
+        this.confirmationMessage = alert(
+          "Errore durante l'invio del messaggio, riprova."
+        );
       }
     },
   },
@@ -112,7 +113,7 @@ export default {
     </transition>
 
     <!-- Modulo Contatto -->
-    <form @submit="submitForm" class="contact-form">
+    <!-- <form @submit="submitForm" class="contact-form">
       <h1>Contattaci:</h1>
       <label for="name">Nome:</label>
       <input type="text" name="name" id="name" required class="form-input" />
@@ -141,7 +142,85 @@ export default {
       ></textarea>
 
       <button type="submit" class="form-button">Invia</button>
-    </form>
+    </form> -->
+
+    <div class="background">
+      <div class="container">
+        <div class="screen">
+          <div class="screen-header">
+            <div class="screen-header-left">
+              <div class="screen-header-button close"></div>
+              <div class="screen-header-button maximize"></div>
+              <div class="screen-header-button minimize"></div>
+            </div>
+            <div class="screen-header-right">
+              <div class="screen-header-ellipsis"></div>
+              <div class="screen-header-ellipsis"></div>
+              <div class="screen-header-ellipsis"></div>
+            </div>
+          </div>
+          <div class="screen-body">
+            <div class="screen-body-item left">
+              <div class="app-title">
+                <span>CONTACT</span>
+                <span>US</span>
+              </div>
+            </div>
+            <div class="screen-body-item">
+              <form @submit="submitForm" class="app-form">
+                <div class="app-form-group">
+                  <label for="name">Nome:</label>
+                  <input
+                    type="text"
+                    class="app-form-control form-input"
+                    id="name"
+                    name="name"
+                    required
+                  />
+                </div>
+                <div class="app-form-group">
+                  <label for="surname">Cognome:</label>
+                  <input
+                    type="text"
+                    class="app-form-control form-input"
+                    id="surname"
+                    name="surname"
+                    required
+                  />
+                </div>
+
+                <div class="app-form-group">
+                  <label for="email">La tua email:</label>
+                  <input
+                    type="email"
+                    class="app-form-control form-input"
+                    id="email"
+                    name="email"
+                    required
+                  />
+                </div>
+                <div class="app-form-group message">
+                  <label for="message">Il tuo messaggio:</label>
+                  <textarea
+                    class="app-form-control form-textarea"
+                    id="message"
+                    name="message"
+                    required
+                  ></textarea>
+                </div>
+                <div class="app-form-group buttons">
+                  <button type="submit" class="app-form-button form-button">
+                    Invia
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <AppContactsUs />
 
     <!-- Messaggio di conferma -->
     <div v-if="confirmationMessage" class="confirmation-message">
@@ -300,12 +379,248 @@ export default {
 }
 
 .form-button:hover {
-  background-color: #0056b3; /* Colore di sfondo più scuro al passaggio del mouse */
+  background-color: white; /* Colore di sfondo più scuro al passaggio del mouse */
 }
 
 .confirmation-message {
   margin-top: 20px; /* Spazio sopra il messaggio */
   font-size: 1.2em; /* Dimensione del testo del messaggio */
   color: green; /* Colore verde per il messaggio di conferma */
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: linear-gradient(to right, white 0%, white 100%);
+  font-size: 12px;
+}
+
+body,
+button,
+input {
+  font-weight: 700;
+}
+
+.background {
+  display: flex;
+  min-height: 100vh;
+}
+
+.container {
+  flex: 0 1 700px;
+  margin: auto;
+  padding: 10px;
+  margin-bottom: 125px;
+}
+
+.screen {
+  position: relative;
+  background: #5bb7b2;
+  border-radius: 15px;
+}
+
+.screen:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 20px;
+  right: 20px;
+  bottom: 0;
+  border-radius: 15px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  z-index: -1;
+}
+
+.screen-header {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  background: black;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.screen-header-left {
+  margin-right: auto;
+}
+
+.screen-header-button {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 3px;
+  border-radius: 8px;
+  background: white;
+}
+
+.screen-header-button.close {
+  background: #ed1c6f;
+}
+
+.screen-header-button.maximize {
+  background: #e8e925;
+}
+
+.screen-header-button.minimize {
+  background: #74c54f;
+}
+
+.screen-header-right {
+  display: flex;
+}
+
+.screen-header-ellipsis {
+  width: 3px;
+  height: 3px;
+  margin-left: 2px;
+  border-radius: 8px;
+  background: #999;
+}
+
+.screen-body {
+  display: flex;
+}
+
+.screen-body-item {
+  flex: 1;
+  padding: 50px;
+}
+
+.screen-body-item.left {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-title {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  color: white;
+  font-size: 26px;
+}
+
+.app-title:after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  width: 25px;
+  height: 4px;
+  background: black;
+}
+
+.app-contact {
+  margin-top: auto;
+  font-size: 8px;
+  color: #888;
+}
+
+.app-form-group {
+  margin-bottom: 15px;
+}
+
+.app-form-group.message {
+  margin-top: 40px;
+}
+
+.app-form-group.buttons {
+  margin-bottom: 0;
+  text-align: right;
+}
+
+.app-form-control {
+  width: 100%;
+  padding: 10px 0;
+  background: none;
+  border: none;
+  border-bottom: 1px solid #666;
+  color: #ddd;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.app-form-control::placeholder {
+  color: #666;
+}
+
+.app-form-control:focus {
+  border-bottom-color: #ddd;
+}
+
+.app-form-button {
+  background: none;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  outline: none;
+}
+
+.app-form-button:hover {
+  color: black;
+}
+
+.credits {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  color: #ffa4bd;
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.credits-link {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.dribbble {
+  width: 20px;
+  height: 20px;
+  margin: 0 5px;
+}
+
+@media screen and (max-width: 520px) {
+  .screen-body {
+    flex-direction: column;
+  }
+
+  .screen-body-item.left {
+    margin-bottom: 30px;
+  }
+
+  .app-title {
+    flex-direction: row;
+  }
+
+  .app-title span {
+    margin-right: 12px;
+  }
+
+  .app-title:after {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .screen-body {
+    padding: 40px;
+  }
+
+  .screen-body-item {
+    padding: 0;
+  }
 }
 </style>
