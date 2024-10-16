@@ -82,7 +82,7 @@ export default {
 
     <!-- Icona fissa sul lato destro -->
     <div class="fixed-icon" @click="toggleModal">
-      <img src="/public/news-icon-2.png" alt="Fixed Icon" />
+      <img src="/small_logo.png" alt="Fixed Icon" />
     </div>
 
     <!-- Modal -->
@@ -259,8 +259,8 @@ export default {
 
 .fixed-icon {
   position: fixed;
-  right: 20px;
-  bottom: 20px;
+  right: 50px;
+  bottom: 50px;
   width: 50px;
   height: 50px;
   z-index: 1000;
@@ -269,9 +269,10 @@ export default {
 }
 
 .fixed-icon img {
-  width: 100%;
-  height: 100%;
+  width: 75px;
+  height: 75px;
   object-fit: cover;
+  border-radius: 20px;
 }
 
 .fixed-icon:hover {
