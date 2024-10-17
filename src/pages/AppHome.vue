@@ -6,6 +6,8 @@ import { ref } from "vue";
 
 export default {
   setup() {
+    const modalVisible = ref(false); // Rendi modalVisible un ref
+
     const lineChartSeries = ref([
       {
         name: "Risparmio",
@@ -74,7 +76,7 @@ export default {
       monthlySaving,
       calculateSavings,
       stockData: null,
-      modalVisible: false,
+      modalVisible,
       activeSlide: 0,
       images: [
         "/image001.png",
@@ -107,9 +109,9 @@ export default {
       }
     },
     toggleModal() {
-      console.log("Modal visibility before:", this.modalVisible.value);
-      this.modalVisible.value = !this.modalVisible.value;
-      console.log("Modal visibility after:", this.modalVisible.value);
+      console.log("Modal visibility before:", this.modalVisible);
+      this.modalVisible = !this.modalVisible;
+      console.log("Modal visibility after:", this.modalVisible);
     },
 
     nextSlide() {
@@ -175,7 +177,7 @@ export default {
 
     <!-- Modal -->
     <transition name="fade">
-      <div class="modal" v-if="modalVisible.value">
+      <div class="modal" v-if="modalVisible">
         <div class="modal-content">
           <div class="modal-header">
             <h2>Notizie</h2>
