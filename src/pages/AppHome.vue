@@ -77,6 +77,7 @@ export default {
       modalVisible: false,
       activeSlide: 0,
       images: [
+        "/image001.png",
         "/IMG_6098.jpg",
         "/IMG_6289.jpg",
         "/IMG_6715.jpg",
@@ -134,7 +135,7 @@ export default {
   mounted() {
     this.fetchStockData();
     AOS.init();
-    setInterval(this.nextSlide, 2000); // Cambia slide ogni 2 secondi
+    setInterval(this.nextSlide, 3000); // Cambia slide ogni 2 secondi
   },
 };
 </script>
