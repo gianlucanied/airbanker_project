@@ -19,30 +19,46 @@ export default {
       },
       xaxis: {
         categories: [],
+        min: 50, // Inizia da 50
+        tickAmount: 5, // Mostra i multipli di 5
+        labels: {
+          formatter: (val) => {
+            return Math.floor(val); // Rimuove i decimali dalle etichette
+          },
+        },
+      },
+      yaxis: {
+        tickAmount: 5, // Mostra i multipli di 500 (numero di tacche sull'asse Y)
+        labels: {
+          formatter: (val) => {
+            return val >= 500 ? val : ""; // Mostra solo i multipli di 500
+          },
+        },
       },
     });
 
-    const age = ref(0); // Età inserita dal cliente
-    const monthlySaving = ref(0); // Risparmio mensile inserito dal cliente
+    const age = ref(18); // Età inserita dal cliente
+    const monthlySaving = ref(50); // Risparmio mensile inserito dal cliente
 
     const newValue = ref(null); // Aggiungi questa riga per dichiarare newValue
     const newIndex = ref(null); // Aggiungi questa riga per dichiarare newIndex
 
     const calculateSavings = () => {
-      const currentAge = age.value;
-      const targetAge = 67;
+      const currentAge = age.value; // Età inserita dall'utente
+      const targetAge = 67; // Età target
       const savings = [];
       const categories = [];
 
+      // Ciclo per creare le categorie (età) e i risparmi corrispondenti
       for (let i = currentAge; i <= targetAge; i++) {
-        categories.push(i); // Aggiungi l'età al grafico
-        const totalSavings = monthlySaving.value * 12 * (i - currentAge); // Calcola il risparmio totale fino all'età target
-        savings.push(totalSavings); // Aggiungi il risparmio al grafico
+        categories.push(i); // Aggiungi l'età come etichetta sull'asse X
+        const totalSavings = monthlySaving.value * 12 * (i - currentAge); // Calcola il risparmio totale
+        savings.push(totalSavings); // Aggiungi il risparmio per ogni anno
       }
 
       // Aggiorna i dati del grafico
       lineChartSeries.value[0].data = savings;
-      lineChartOptions.value.xaxis.categories = categories;
+      lineChartOptions.value.xaxis.categories = categories; // Imposta le categorie come gli anni
     };
 
     // Definizione della funzione updateChartData
@@ -90,8 +106,11 @@ export default {
       }
     },
     toggleModal() {
-      this.modalVisible = !this.modalVisible;
+      console.log("Modal visibility before:", this.modalVisible.value);
+      this.modalVisible.value = !this.modalVisible.value;
+      console.log("Modal visibility after:", this.modalVisible.value);
     },
+
     nextSlide() {
       this.activeSlide = (this.activeSlide + 1) % this.images.length;
     },
@@ -139,15 +158,14 @@ export default {
         :series="lineChartSeries"
         :options="lineChartOptions"
       />
-    </div>
-
-    <!-- Input per calcolare il risparmio -->
-    <div class="input-container">
-      <label for="age">Età attuale:</label>
-      <input type="number" id="age" v-model="age" min="0" max="67" />
-      <label for="monthlySaving">Risparmio mensile:</label>
-      <input type="number" id="monthlySaving" v-model="monthlySaving" />
-      <button @click="calculateSavings">Calcola Risparmio</button>
+      <!-- Input per calcolare il risparmio -->
+      <div class="input-container">
+        <label for="age">Età attuale:</label>
+        <input type="number" id="age" v-model="age" min="0" max="67" />
+        <label for="monthlySaving">Risparmio mensile:</label>
+        <input type="number" id="monthlySaving" v-model="monthlySaving" />
+        <button @click="calculateSavings">Calcola Risparmio</button>
+      </div>
     </div>
 
     <div class="fixed-icon" @click="toggleModal">
@@ -156,7 +174,7 @@ export default {
 
     <!-- Modal -->
     <transition name="fade">
-      <div class="modal" v-if="modalVisible">
+      <div class="modal" v-if="modalVisible.value">
         <div class="modal-content">
           <div class="modal-header">
             <h2>Notizie</h2>
