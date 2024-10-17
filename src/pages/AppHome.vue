@@ -8,33 +8,55 @@ export default {
   setup() {
     const lineChartSeries = ref([
       {
-        name: "Sales",
-        data: [30, 40, 35, 50, 49, 60, 70],
+        name: "Risparmio",
+        data: [],
       },
     ]);
 
     const lineChartOptions = ref({
       chart: {
-        id: "vuechart-example",
+        id: "risparmio-chart",
       },
       xaxis: {
-        categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+        categories: [],
       },
     });
 
-    const newValue = ref(0);
-    const newIndex = ref(0);
+    const age = ref(0); // Età inserita dal cliente
+    const monthlySaving = ref(0); // Risparmio mensile inserito dal cliente
 
-    const updateChartData = () => {
-      // Aggiorna il valore della vendita nel grafico
-      lineChartSeries.value[0].data[newIndex.value] = Number(newValue.value);
-      // Clona l'array per forzare il ricaricamento del grafico
-      lineChartSeries.value = [...lineChartSeries.value];
+    const newValue = ref(null); // Aggiungi questa riga per dichiarare newValue
+    const newIndex = ref(null); // Aggiungi questa riga per dichiarare newIndex
+
+    const calculateSavings = () => {
+      const currentAge = age.value;
+      const targetAge = 67;
+      const savings = [];
+      const categories = [];
+
+      for (let i = currentAge; i <= targetAge; i++) {
+        categories.push(i); // Aggiungi l'età al grafico
+        const totalSavings = monthlySaving.value * 12 * (i - currentAge); // Calcola il risparmio totale fino all'età target
+        savings.push(totalSavings); // Aggiungi il risparmio al grafico
+      }
+
+      // Aggiorna i dati del grafico
+      lineChartSeries.value[0].data = savings;
+      lineChartOptions.value.xaxis.categories = categories;
+    };
+
+    // Definizione della funzione updateChartData
+    const updateChartData = (newData) => {
+      lineChartSeries.value[0].data = newData.data; // Aggiorna con nuovi dati
+      lineChartOptions.value.xaxis.categories = newData.categories; // Aggiorna con nuove categorie
     };
 
     return {
       lineChartSeries,
       lineChartOptions,
+      age,
+      monthlySaving,
+      calculateSavings,
       stockData: null,
       modalVisible: false,
       activeSlide: 0,
@@ -46,9 +68,9 @@ export default {
         "/IMG_6872.jpg",
       ],
       confirmationMessage: "",
-      newValue,
-      newIndex,
-      updateChartData,
+      newValue, // Aggiungi newValue al ritorno
+      newIndex, // Aggiungi newIndex al ritorno
+      updateChartData, // Assicurati di definire updateChartData o rimuovilo se non è necessario
     };
   },
   methods: {
@@ -119,13 +141,13 @@ export default {
       />
     </div>
 
-    <!-- Input per aggiornare i dati del grafico -->
+    <!-- Input per calcolare il risparmio -->
     <div class="input-container">
-      <label for="index">Indice della vendita (0-6):</label>
-      <input type="number" id="index" v-model="newIndex" min="0" max="6" />
-      <label for="value">Nuovo valore delle vendite:</label>
-      <input type="number" id="value" v-model="newValue" />
-      <button @click="updateChartData">Aggiorna Grafico</button>
+      <label for="age">Età attuale:</label>
+      <input type="number" id="age" v-model="age" min="0" max="67" />
+      <label for="monthlySaving">Risparmio mensile:</label>
+      <input type="number" id="monthlySaving" v-model="monthlySaving" />
+      <button @click="calculateSavings">Calcola Risparmio</button>
     </div>
 
     <div class="fixed-icon" @click="toggleModal">
