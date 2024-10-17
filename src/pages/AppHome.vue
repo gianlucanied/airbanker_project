@@ -2,21 +2,53 @@
 import axios from "axios";
 import AOS from "aos"; // Importa AOS
 import "aos/dist/aos.css"; // Importa il CSS di AOS
+import { ref } from "vue";
 
 export default {
-  data() {
+  setup() {
+    const lineChartSeries = ref([
+      {
+        name: "Sales",
+        data: [30, 40, 35, 50, 49, 60, 70],
+      },
+    ]);
+
+    const lineChartOptions = ref({
+      chart: {
+        id: "vuechart-example",
+      },
+      xaxis: {
+        categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+      },
+    });
+
+    const newValue = ref(0);
+    const newIndex = ref(0);
+
+    const updateChartData = () => {
+      // Aggiorna il valore della vendita nel grafico
+      lineChartSeries.value[0].data[newIndex.value] = Number(newValue.value);
+      // Clona l'array per forzare il ricaricamento del grafico
+      lineChartSeries.value = [...lineChartSeries.value];
+    };
+
     return {
+      lineChartSeries,
+      lineChartOptions,
       stockData: null,
-      modalVisible: false, // Stato per la visibilità del modal
-      activeSlide: 0, // Stato per il carosello
+      modalVisible: false,
+      activeSlide: 0,
       images: [
         "/IMG_6098.jpg",
         "/IMG_6289.jpg",
         "/IMG_6715.jpg",
         "/IMG_6827.jpg",
         "/IMG_6872.jpg",
-      ], // Array delle immagini del carosello
-      confirmationMessage: "", // Messaggio di conferma
+      ],
+      confirmationMessage: "",
+      newValue,
+      newIndex,
+      updateChartData,
     };
   },
   methods: {
@@ -36,20 +68,20 @@ export default {
       }
     },
     toggleModal() {
-      this.modalVisible = !this.modalVisible; // Toggle della visibilità del modal
+      this.modalVisible = !this.modalVisible;
     },
     nextSlide() {
-      this.activeSlide = (this.activeSlide + 1) % this.images.length; // Cambio automatico del carosello
+      this.activeSlide = (this.activeSlide + 1) % this.images.length;
     },
     async submitForm(event) {
-      event.preventDefault(); // Previene il comportamento predefinito del modulo
+      event.preventDefault();
 
-      const formData = new FormData(event.target); // Raccoglie i dati del modulo
+      const formData = new FormData(event.target);
 
       try {
-        await axios.post("https://formspree.io/f/manyybvw", formData); // Invia i dati a Formspree
-        this.confirmationMessage = alert("Messaggio inviato con successo!"); // Messaggio di conferma
-        event.target.reset(); // Resetta il modulo dopo l'invio
+        await axios.post("https://formspree.io/f/manyybvw", formData);
+        this.confirmationMessage = alert("Messaggio inviato con successo!");
+        event.target.reset();
       } catch (error) {
         console.error("Errore durante l'invio del modulo", error);
         this.confirmationMessage = alert(
@@ -72,7 +104,6 @@ export default {
     <div class="jumbotron">
       <div class="carousel">
         <img :src="images[activeSlide]" alt="Slide" />
-        <!-- Testo fisso sopra il carosello -->
         <div class="carousel-text">
           <h1>Benvenuti nel nostro sito</h1>
           <p>Esplora le nostre ultime novità</p>
@@ -80,7 +111,23 @@ export default {
       </div>
     </div>
 
-    <!-- Icona fissa sul lato destro -->
+    <div class="container-chart">
+      <apexchart
+        type="line"
+        :series="lineChartSeries"
+        :options="lineChartOptions"
+      />
+    </div>
+
+    <!-- Input per aggiornare i dati del grafico -->
+    <div class="input-container">
+      <label for="index">Indice della vendita (0-6):</label>
+      <input type="number" id="index" v-model="newIndex" min="0" max="6" />
+      <label for="value">Nuovo valore delle vendite:</label>
+      <input type="number" id="value" v-model="newValue" />
+      <button @click="updateChartData">Aggiorna Grafico</button>
+    </div>
+
     <div class="fixed-icon" @click="toggleModal">
       <img src="/small_logo.png" alt="Fixed Icon" />
     </div>
@@ -261,6 +308,41 @@ export default {
 
 .fixed-icon:hover {
   transform: scale(1.1);
+}
+
+/* Stile grafico */
+.container-chart {
+  margin: 40px auto; /* Margine superiore per dare spazio attorno al grafico */
+  padding: 20px; /* Spazio interno per il grafico */
+  background-color: #f9f9f9; /* Colore di sfondo leggero */
+  border-radius: 12px; /* Bordi arrotondati per un aspetto più morbido */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Leggera ombra per profondità */
+  max-width: 800px; /* Larghezza massima del contenitore */
+  border: 1px solid #e0e0e0; /* Bordo leggero */
+  transition: transform 0.3s ease; /* Transizione per l'effetto hover */
+}
+
+.container-chart:hover {
+  transform: scale(
+    1.02
+  ); /* Effetto di ingrandimento leggero al passaggio del mouse */
+}
+
+/* Aggiungi uno stile per gli input del grafico */
+.input-container {
+  margin: 20px 0; /* Margine attorno agli input */
+}
+
+.input-container label {
+  display: block; /* Ogni etichetta su una nuova riga */
+  margin: 10px 0 5px; /* Spazio attorno alle etichette */
+}
+
+.input-container input {
+  margin-bottom: 10px; /* Spazio sotto gli input */
+  padding: 8px; /* Padding interno */
+  border: 1px solid #ccc; /* Bordo grigio chiaro */
+  border-radius: 4px; /* Bordo arrotondato */
 }
 
 /* Stile per il modal */

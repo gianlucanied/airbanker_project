@@ -277,4 +277,22 @@ ul {
   color: #24262b;
   background-color: #ffffff;
 }
+
+/* Layout per schermi più grandi */
+.footer-col {
+  width: 25%;
+  padding: 0 15px;
+}
+
+/* Media query per schermi piccoli */
+@media (max-width: 768px) {
+  .row {
+    flex-direction: column; /* Imposta il layout in colonna */
+  }
+
+  .footer-col {
+    width: 100%; /* Ogni colonna occupa l'intera larghezza */
+    margin-bottom: 20px; /* Aggiungi un po' di margine sotto ogni colonna */
+  }
+}
 </style>
